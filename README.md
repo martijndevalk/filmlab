@@ -41,3 +41,12 @@ FilmLab is a Neo-brutalist web application designed for photographers who love t
 
 ---
 *Created with ❤️ for the analog community.*
+
+## 🌍 Deployment
+
+This project is configured for automated deployment to **GitHub Pages**.
+
+1. Push your code to the `main` branch.
+2. Go to your repository settings on GitHub: **Settings > Pages**.
+3. Under **Build and deployment > Source**, select **GitHub Actions**.
+4. Your site will be live at `https://martijndevalk.github.io/filmlab/` once the action completes.
