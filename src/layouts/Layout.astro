@@ -18,6 +18,15 @@ const { title } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>FilmLab — 35mm Film Emulation & Photo Editor</title>
 		<meta name="description" content="Apply professional 35mm film LUTs, realistic grain, and halation effects directly in your browser. Neo-brutalist design, privacy-first processing." />
+
+		<!-- PWA & Mobile -->
+		<link rel="manifest" href="/filmlab/manifest.webmanifest" />
+		<meta name="theme-color" content="#FDB913" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="FilmLab" />
+		<link rel="apple-touch-icon" href="/filmlab/favicon.svg" />
+
 		<ViewTransitions />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +48,15 @@ const { title } = Astro.props;
 				document.documentElement.setAttribute('data-theme', 'dark');
 			}
 			window.localStorage.setItem('theme', theme);
+		</script>
+		<script is:inline>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker.register('/filmlab/sw.js')
+						.then(reg => console.log('SW registered'))
+						.catch(err => console.log('SW registration failed', err));
+				});
+			}
 		</script>
 	</head>
 	<body>

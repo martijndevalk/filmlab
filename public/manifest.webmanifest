@@ -1,0 +1,17 @@
+{
+  "name": "FilmLab - 35mm Film Emulation",
+  "short_name": "FilmLab",
+  "description": "Geef je digitale foto's een authentieke analoge film-look met professionele LUTs.",
+  "start_url": "/filmlab/",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#FDB913",
+  "icons": [
+    {
+      "src": "/filmlab/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

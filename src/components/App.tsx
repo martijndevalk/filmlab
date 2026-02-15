@@ -3,6 +3,7 @@ import { DropZone } from './DropZone';
 import { ImageEditor } from './ImageEditor';
 import { Zap, Layers, ShieldCheck } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { InstallPrompt } from './InstallPrompt';
 import styles from './App.module.css';
 
 import { FeatureCard } from './ui/FeatureCard';
@@ -70,6 +71,7 @@ export default function App() {
               description="100% lokaal, geen upload"
             />
           </footer>
+          <InstallPrompt />
         </div>
       ) : (
         <ImageEditor imageFile={imageFile} onReset={handleReset} />
