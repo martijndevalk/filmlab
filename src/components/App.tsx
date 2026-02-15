@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DropZone } from './DropZone';
 import { ImageEditor } from './ImageEditor';
 import { Zap, Layers, ShieldCheck } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 import styles from './App.module.css';
 
 import { FeatureCard } from './ui/FeatureCard';
@@ -34,8 +35,11 @@ export default function App() {
       {!imageFile ? (
         <div className={styles.appContainer}>
           <header className={styles.header}>
-            <div className={styles.logoWrapper}>
-              <h1 className={styles.logoText}>FilmLab</h1>
+            <div className={styles.headerTop}>
+              <div className={styles.logoWrapper}>
+                <h1 className={styles.logoText}>FilmLab</h1>
+              </div>
+              <ThemeToggle />
             </div>
             <h2 className={styles.headline}>
               Geef je digitale foto's een authentieke analoge film-look

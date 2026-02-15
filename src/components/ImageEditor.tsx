@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Controls, type FilterType, FILTERS } from './Controls';
 import { useLutFilter } from '../hooks/useLutFilter';
 import { Eye } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 import styles from './ImageEditor.module.css';
 
 interface ImageEditorProps {
@@ -163,10 +164,14 @@ export function ImageEditor({ imageFile, onReset }: ImageEditorProps) {
              onTouchEnd={stopComparing}
            />
 
-           <div className={styles.compareOverlay} title="Ingehouden houden om te vergelijken met het origineel">
-             <Eye size={20} />
-             <span className={styles.compareTooltip}>Houd ingedrukt om te vergelijken</span>
-           </div>
+            <div className={styles.themeToggleOverlay}>
+              <ThemeToggle />
+            </div>
+
+            <div className={styles.compareOverlay} title="Ingehouden houden om te vergelijken met het origineel">
+              <Eye size={20} />
+              <span className={styles.compareTooltip}>Houd ingedrukt om te vergelijken</span>
+            </div>
 
            {!image && (
              <div className={styles.loadingOverlay}>

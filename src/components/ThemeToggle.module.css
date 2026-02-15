@@ -1,0 +1,27 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-2xl);
+  height: var(--space-2xl);
+  background-color: var(--color-surface);
+  border: var(--border-thin);
+  color: var(--color-on-surface);
+  cursor: pointer;
+  transition: transform var(--duration-snappy) var(--timing-bounce),
+              background-color var(--duration-snappy) var(--timing-smooth),
+              box-shadow var(--duration-snappy) var(--timing-bounce);
+  box-shadow: var(--px-4) var(--px-4) 0px 0px var(--color-on-surface);
+  padding: 0;
+
+  &:hover {
+    transform: translate(calc(-1 * var(--px-2)), calc(-1 * var(--px-2)));
+    box-shadow: var(--px-6) var(--px-6) 0px 0px var(--color-on-surface);
+    background-color: var(--hover-bg);
+  }
+
+  &:active {
+    transform: translate(var(--px-1), var(--px-1));
+    box-shadow: var(--px-2) var(--px-2) 0px 0px var(--color-on-surface);
+  }
+}

@@ -53,6 +53,14 @@
   pointer-events: auto;
 }
 
+.themeToggleOverlay {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  z-index: 10;
+  pointer-events: auto;
+}
+
 .compareOverlay {
   position: absolute;
   top: var(--space-md);

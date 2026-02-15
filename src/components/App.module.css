@@ -49,6 +49,14 @@
   max-width: var(--max-width-content);
 }
 
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
 .logoWrapper {
   display: inline-block;
   background: var(--color-on-surface);

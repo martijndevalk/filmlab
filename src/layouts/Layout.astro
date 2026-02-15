@@ -22,6 +22,24 @@ const { title } = Astro.props;
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme');
+				}
+				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					return 'dark';
+				}
+				return 'light';
+			})();
+
+			if (theme === 'light') {
+				document.documentElement.removeAttribute('data-theme');
+			} else {
+				document.documentElement.setAttribute('data-theme', 'dark');
+			}
+			window.localStorage.setItem('theme', theme);
+		</script>
 	</head>
 	<body>
 		<slot />
@@ -156,6 +174,28 @@ const { title } = Astro.props;
 		--duration-loop: 6s;
 		--duration-spin: 1s;
 		--delay-snappy: 0.1s;
+	}
+
+	[data-theme="dark"] {
+		--background: #09090b;
+		--foreground: oklch(0.95 0 0);
+		--card: #09090b;
+		--card-foreground: oklch(0.95 0 0);
+		--muted: #18181b;
+		--muted-foreground: #a1a1aa;
+		--accent: #27272a;
+		--accent-foreground: #fafafa;
+		--color-bg-app: #030303;
+		--color-surface: #09090b;
+		--color-on-surface: #ffffff;
+		--color-text-primary: #f4f4f5;
+		--color-text-secondary: #a1a1aa;
+		--color-text-muted: #71717a;
+		--color-text-inverted: #000000;
+		--color-overlay: rgba(255, 255, 255, 0.08);
+		--color-brand-light: rgba(253, 185, 19, 0.15);
+		--hover-bg: #1f1f23;
+		--border: rgba(255, 255, 255, 0.1);
 	}
 
 	html {
