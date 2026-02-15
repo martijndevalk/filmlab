@@ -1,4 +1,5 @@
 :root {
+  interpolate-size: allow-keywords;
   --hard-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
   --hard-shadow-sm: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
@@ -61,11 +62,22 @@
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: default;
   view-transition-name: logo;
+  animation: logoWobble 4s ease-in-out infinite;
+}
+
+@keyframes logoWobble {
+  0% { transform: rotate(-1deg) scale(1); }
+  25% { transform: rotate(1deg) scale(1.02); }
+  50% { transform: rotate(-1.5deg) scale(0.99); }
+  75% { transform: rotate(0.5deg) scale(1.01); }
+  100% { transform: rotate(-1deg) scale(1); }
 }
 
 .logoWrapper:hover {
-  transform: rotate(1deg) scale(1.05) translate(-4px, -4px);
+  animation-play-state: paused;
+  transform: rotate(2deg) scale(1.1) translate(-4px, -4px);
   box-shadow: 12px 12px 0px rgba(0,0,0,1);
+  background: #111;
 }
 
 .logoText {

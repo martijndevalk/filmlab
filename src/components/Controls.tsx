@@ -70,7 +70,7 @@ export function Controls({
       </div>
 
       {/* Filter Selection Section */}
-      <div className={styles.section}>
+      <div className={`${styles.section} ${!isFiltersExpanded ? styles.sectionCollapsed : ''}`}>
         <button
           className={styles.sectionHeader}
           onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
@@ -82,27 +82,25 @@ export function Controls({
           {isFiltersExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
 
-        {isFiltersExpanded && (
-          <div className={styles.sectionContent}>
-            <div className={styles.filterGrid}>
-              {FILTERS.map((filter) => (
-                <button
-                  key={filter.id}
-                  onClick={() => onFilterChange(filter.id)}
-                  className={`${styles.btn} ${styles.filterButton} ${selectedFilter === filter.id ? styles.btnPrimary : ''}`}
-                  title={`Toepassen: ${filter.label}`}
-                  aria-label={`Selecteer ${filter.label} filter`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-            </div>
+        <div className={`${styles.sectionContent} ${!isFiltersExpanded ? styles.collapsed : ''}`}>
+          <div className={styles.filterGrid}>
+            {FILTERS.map((filter) => (
+              <button
+                key={filter.id}
+                onClick={() => onFilterChange(filter.id)}
+                className={`${styles.btn} ${styles.filterButton} ${selectedFilter === filter.id ? styles.btnPrimary : ''}`}
+                title={`Toepassen: ${filter.label}`}
+                aria-label={`Selecteer ${filter.label} filter`}
+              >
+                {filter.label}
+              </button>
+            ))}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Effects/Settings Section */}
-      <div className={styles.section}>
+      <div className={`${styles.section} ${!isEffectsExpanded ? styles.sectionCollapsed : ''}`}>
         <button
           className={styles.sectionHeader}
           onClick={() => setIsEffectsExpanded(!isEffectsExpanded)}
@@ -114,57 +112,55 @@ export function Controls({
           {isEffectsExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
 
-        {isEffectsExpanded && (
-          <div className={`${styles.sectionContent} ${styles.effectsGrid}`}>
-            {/* Intensity Slider */}
-            <div className={styles.sliderGroup}>
-              <div className={styles.intensityHeader}>
-                <label className={styles.intensityLabel}>Intensity</label>
-                <span className={styles.intensityValue}>{intensity}%</span>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={intensity}
-                onChange={(e) => onIntensityChange(Number(e.target.value))}
-                className={styles.inputRange}
-              />
+        <div className={`${styles.sectionContent} ${styles.effectsGrid} ${!isEffectsExpanded ? styles.collapsed : ''}`}>
+          {/* Intensity Slider */}
+          <div className={styles.sliderGroup}>
+            <div className={styles.intensityHeader}>
+              <label className={styles.intensityLabel}>Intensity</label>
+              <span className={styles.intensityValue}>{intensity}%</span>
             </div>
-
-            {/* Grain Slider */}
-            <div className={styles.sliderGroup}>
-              <div className={styles.intensityHeader}>
-                <label className={styles.intensityLabel}>Film Grain</label>
-                <span className={styles.intensityValue}>{grainAmount}%</span>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={grainAmount}
-                onChange={(e) => onGrainChange(Number(e.target.value))}
-                className={styles.inputRange}
-              />
-            </div>
-
-            {/* Halation Slider */}
-            <div className={styles.sliderGroup}>
-              <div className={styles.intensityHeader}>
-                <label className={styles.intensityLabel}>Halation</label>
-                <span className={styles.intensityValue}>{halationAmount}%</span>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={halationAmount}
-                onChange={(e) => onHalationChange(Number(e.target.value))}
-                className={styles.inputRange}
-              />
-            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={intensity}
+              onChange={(e) => onIntensityChange(Number(e.target.value))}
+              className={styles.inputRange}
+            />
           </div>
-        )}
+
+          {/* Grain Slider */}
+          <div className={styles.sliderGroup}>
+            <div className={styles.intensityHeader}>
+              <label className={styles.intensityLabel}>Film Grain</label>
+              <span className={styles.intensityValue}>{grainAmount}%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={grainAmount}
+              onChange={(e) => onGrainChange(Number(e.target.value))}
+              className={styles.inputRange}
+            />
+          </div>
+
+          {/* Halation Slider */}
+          <div className={styles.sliderGroup}>
+            <div className={styles.intensityHeader}>
+              <label className={styles.intensityLabel}>Halation</label>
+              <span className={styles.intensityValue}>{halationAmount}%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={halationAmount}
+              onChange={(e) => onHalationChange(Number(e.target.value))}
+              className={styles.inputRange}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Actions */}

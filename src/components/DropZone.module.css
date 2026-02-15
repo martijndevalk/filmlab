@@ -1,87 +1,16 @@
-.dropZoneContainer {
+.dropZone {
   width: 100%;
   max-width: 48rem;
   aspect-ratio: 16/9;
   border: 4px dashed black;
   background-color: white;
   cursor: pointer;
-  transition: all 0.15s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dropZoneContainer:hover {
-  background-color: #f9fafb;
-}
-
-.iconBox {
-  padding: 1.5rem;
-  background: black;
-  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-  display: inline-flex;
-  margin-bottom: 1rem;
-}
-
-.content {
-  text-align: center;
-}
-
-.icon {
-  width: 4rem;
-  height: 4rem;
-  margin-bottom: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-  animation: float 3s ease-in-out infinite;
-  display: block; /* Ensure it's not inline for transform */
-}
-
-.dropZone:hover .icon,
-.dropZoneActive .icon {
-  animation: bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite alternate;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes bounce {
-  from { transform: translateY(0) scale(1.05); }
-  to { transform: translateY(-15px) scale(0.95); }
-}
-
-.title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-  color: black;
-}
-
-.subtitle {
-  font-size: 1.125rem;
-  color: #6b7280;
-}
-
-.hiddenInput {
-  display: none;
-}
-
-.dropZone {
-  border: 4px dashed #000;
-  border-radius: 4px;
-  background-color: #fff;
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  padding: 2rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  max-width: 48rem;
+  padding: 2.5rem; /* Increased padding to prevent touching borders */
   box-shadow: var(--hard-shadow);
   animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }
@@ -92,7 +21,6 @@
 }
 
 .dropZone:hover {
-  border-color: #000;
   background-color: #fff9e6;
   transform: translate(-4px, -4px);
   box-shadow: 12px 12px 0px rgba(0, 0, 0, 1);
@@ -101,12 +29,51 @@
 .dropZoneActive {
   border: 4px solid var(--kodak-yellow);
   background-color: rgba(253, 185, 19, 0.1);
-  animation: borderJump 0.4s infinite alternate;
 }
 
-@keyframes borderJump {
-  from { transform: scale(1.02); }
-  to { transform: scale(1.04); }
+.content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem; /* Tight gap for text elements */
+}
+
+.iconBox {
+  padding: 1.25rem;
+  background: black;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  display: inline-flex;
+  margin-bottom: 0.75rem; /* Spacing below the icon box */
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+}
+
+.dropZone:hover .icon {
+  animation: bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0) scale(1.05); }
+  to { transform: translateY(-10px) scale(0.95); }
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0;
+  color: black;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin: 0;
+  color: #4b5563;
 }
 
 .loading {
@@ -130,14 +97,10 @@
 
 .loadingText {
   font-size: 1.25rem;
-  font-weight: 500;
+  font-weight: 800;
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

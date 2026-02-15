@@ -97,7 +97,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
   };
 
   return (
-    <div className={`${styles.dropZoneContainer} ${isLoading ? styles.loading : ''}`}
+    <div className={`${styles.dropZone} ${isLoading ? styles.loading : ''}`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onClick={handleClick}
