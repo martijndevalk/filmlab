@@ -16,6 +16,7 @@ interface UseLutFilterProps {
 
 export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilterProps) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [lutIdentifier, setLutIdentifier] = useState(0); // Used to force re-render when LUT changes
   const glRef = useRef<WebGL2RenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
   const lutTextureRef = useRef<WebGLTexture | null>(null);
@@ -35,14 +36,6 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
 
     glRef.current = gl;
 
-    // Compile shader with dynamic replacement if needed (e.g. for dynamic size, but we can stick to uniforms)
-    // We need to handle the "size" variable in the fragment shader.
-    // Let's modify the source string before compiling.
-    // Actually, texture() with sampler3D uses normalized coordinates (0..1), so strict size isn't needed for lookup
-    // IF we trust linear interpolation.
-    // But precise edge handling often requires knowing texel size (0.5/size).
-    // For this simple version, standard texture lookup is fine.
-
     try {
       programRef.current = createProgram(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
     } catch (e) {
@@ -51,7 +44,6 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
 
     return () => {
       // Cleanup GL resources if needed
-      // gl.deleteProgram...
     };
   }, [canvasRef]);
 
@@ -73,9 +65,8 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
 
         lutTextureRef.current = createLutTexture(gl, size, data);
 
-        // Re-compile shader if size changed significantly?
-        // Or just update uniform if we used one.
-        // For now, assuming 33 size or similar is handled by Linear filtering.
+        // Force re-render
+        setLutIdentifier(prev => prev + 1);
 
       } catch (err) {
         console.error('Failed to load LUT:', err);
@@ -85,12 +76,12 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
     };
 
     loadLut();
-  }, [lutUrl]);
+  }, [lutUrl, glRef.current]); // Added glRef.current just in case, though it's a ref
 
   // Render Loop
   useEffect(() => {
     const gl = glRef.current;
-    if (!gl || !programRef.current || !canvasRef.current || !image) return; // Wait for image
+    if (!gl || !programRef.current || !canvasRef.current || !image) return;
 
     const render = () => {
       // Resize canvas to match image
@@ -102,8 +93,7 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
 
       gl.useProgram(programRef.current);
 
-      // Upload Image Texture
-      // In production, only upload when image changes.
+      // Upload Image Texture (Lazy load)
       if (!imageTextureRef.current) {
         const tex = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -130,7 +120,6 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
       }
 
       // Draw Quad
-      // We need a buffer for the full screen quad
       const positionBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
@@ -146,7 +135,7 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
       gl.enableVertexAttribArray(a_position);
       gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 0, 0);
 
-      // TexCoords (flipped Y?)
+      // TexCoords
       const texCoordBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
@@ -167,7 +156,7 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
 
     requestAnimationFrame(render);
 
-  }, [image, intensity, lutUrl]); // Re-render when these change
+  }, [image, intensity, lutUrl, lutIdentifier]); // Added lutIdentifier dependency
 
   return { isProcessing };
 }

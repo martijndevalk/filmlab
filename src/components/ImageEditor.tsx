@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Controls, FilterType } from './Controls';
+import { Controls, type FilterType } from './Controls';
 import { useLutFilter } from '../hooks/useLutFilter';
 import styles from './ImageEditor.module.css';
 
@@ -10,7 +10,7 @@ interface ImageEditorProps {
 
 export function ImageEditor({ imageFile, onReset }: ImageEditorProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('ektachrome');
-  const [intensity, setIntensity] = useState(70);
+  const [intensity, setIntensity] = useState(100);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);

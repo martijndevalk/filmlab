@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, Loader2 } from 'lucide-react';
 import styles from './DropZone.module.css';
 
 interface DropZoneProps {
@@ -15,6 +15,7 @@ const CONSTANTS = {
 
 export function DropZone({ onFileSelect }: DropZoneProps) {
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateFile = async (file: File): Promise<boolean> => {
     // 1. MIME type check
@@ -46,13 +47,23 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
   };
 
   const processFile = async (file: File) => {
+    setIsLoading(true);
+    setError(null);
+
+    // Simulate a small delay for better UX (so the loader is visible)
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     if (await validateFile(file)) {
       onFileSelect(file);
+    } else {
+      setIsLoading(false);
     }
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    if (isLoading) return;
+
     const file = e.dataTransfer.files[0];
     if (file) {
       processFile(file);
@@ -64,6 +75,8 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
   };
 
   const handleClick = () => {
+    if (isLoading) return;
+
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/jpeg,image/png';
@@ -77,25 +90,34 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
   };
 
   return (
-    <div className={styles.dropZoneContainer}
+    <div className={`${styles.dropZoneContainer} ${isLoading ? styles.loading : ''}`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onClick={handleClick}
     >
       <div className={styles.content}>
-        <div style={{ padding: '1.5rem', background: 'black', boxShadow: 'var(--hard-shadow-sm)', display: 'inline-flex', marginBottom: '1.5rem' }}>
-          <Upload className={styles.icon} style={{ width: '4rem', height: '4rem', color: 'white', margin: 0 }} strokeWidth={2.5} />
-        </div>
-        <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-          Sleep je JPG hier
-        </p>
-        <p style={{ fontSize: '1.125rem', color: '#4b5563' }}>
-          of klik om te uploaden
-        </p>
-        {error && (
-          <p style={{ color: 'var(--destructive)', marginTop: '1rem', fontWeight: 'bold' }}>
-            {error}
-          </p>
+        {isLoading ? (
+          <div className={styles.loaderContainer}>
+             <Loader2 className={styles.spinner} size={64} />
+             <p className={styles.loadingText}>Bestand verwerken...</p>
+          </div>
+        ) : (
+          <>
+            <div style={{ padding: '1.5rem', background: 'black', boxShadow: 'var(--hard-shadow-sm)', display: 'inline-flex', marginBottom: '1.5rem' }}>
+              <Upload className={styles.icon} style={{ width: '4rem', height: '4rem', color: 'white', margin: 0 }} strokeWidth={2.5} />
+            </div>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              Sleep je JPG hier
+            </p>
+            <p style={{ fontSize: '1.125rem', color: '#4b5563' }}>
+              of klik om te uploaden
+            </p>
+            {error && (
+              <p style={{ color: 'var(--destructive)', marginTop: '1rem', fontWeight: 'bold' }}>
+                {error}
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>
