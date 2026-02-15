@@ -1,11 +1,43 @@
+# 🎞️ FilmLab
 
-  # FilmLab webapp design
+FilmLab is a Neo-brutalist web application designed for photographers who love the analog aesthetic. It allows you to apply high-quality film emulations (LUTs) and physical film effects like grain and halation directly in your browser using high-performance WebGL.
 
-  This is a code bundle for FilmLab webapp design. The original project is available at https://www.figma.com/design/47AQKE05fJdzkeQnSjn3CU/FilmLab-webapp-design.
+## ✨ Features
 
-  ## Running the code
+- **Genuine 35mm LUTs**: Including Portra 400, Ektachrome, and Kodachrome.
+- **Dynamic Film Grain**: Realistic Simplex-noise based grain with adjustable intensity.
+- **Halation Effect**: Emulate the "red glow" seen in high-contrast analog shots.
+- **Neo-brutalist UI**: A bold, tactile interface with energetic animations.
+- **Framed Export**: Save your photos with a professional white border and metadata.
+- **Privacy First**: All processing happens locally in your browser. No photos ever leave your computer.
 
-  Run `npm i` to install the dependencies.
+## 🚀 Getting Started
 
-  Run `npm run dev` to start the development server.
-  
+### Prerequisites
+
+- Node.js (Latest LTS version recommended)
+- npm
+
+### Installation
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Open your browser at `http://localhost:4321`
+
+## 🛠️ Built With
+
+- **Astro**: Modern web architecture.
+- **React 19**: Responsive UI components.
+- **WebGL**: Hardware-accelerated image processing.
+- **Lucide**: Clean and consistent iconography.
+
+---
+*Created with ❤️ for the analog community.*
