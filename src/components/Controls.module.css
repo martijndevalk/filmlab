@@ -1,0 +1,146 @@
+.controlsContainer {
+  width: 100%;
+  padding: 1.5rem; /* p-6 */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* gap-6 */
+  background: var(--muted);
+  border-left: 4px solid black;
+}
+
+@media (min-width: 1024px) {
+  .controlsContainer {
+    width: 24rem; /* lg:w-96 */
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.filterLabel {
+  display: block;
+  margin-bottom: 1rem; /* mb-4 */
+  font-weight: bold;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem; /* gap-3 */
+}
+
+.intensityHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.intensityLabel {
+  font-weight: bold;
+}
+
+.intensityValue {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+/* Button Component Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: black;
+  background-color: white;
+  border: 4px solid black;
+  box-shadow: var(--hard-shadow-sm);
+  transition: all 0.1s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px black;
+}
+
+.btn:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px black;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnPrimary {
+  background-color: var(--kodak-yellow);
+  box-shadow: var(--hard-shadow);
+}
+
+.btnIcon {
+  padding: 0.75rem;
+}
+
+.filterButton {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.downloadButton {
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.125rem; /* text-lg */
+  margin-top: auto;
+}
+
+.downloadContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem; /* gap-3 */
+}
+
+/* Input Range Styles */
+.inputRange {
+  width: 100%;
+  height: 3rem;
+  appearance: none;
+  background: white;
+  border: 4px solid black;
+  box-shadow: var(--hard-shadow-sm);
+  cursor: pointer;
+}
+
+.inputRange::-webkit-slider-thumb {
+  appearance: none;
+  width: 32px;
+  height: 48px;
+  background: black;
+  cursor: pointer;
+  border: 4px solid black;
+  box-shadow: var(--hard-shadow-sm);
+}
+
+.inputRange::-moz-range-thumb {
+  width: 32px;
+  height: 48px;
+  background: black;
+  cursor: pointer;
+  border: 4px solid black;
+  box-shadow: var(--hard-shadow-sm);
+}

@@ -1,0 +1,48 @@
+.editorContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .editorContainer {
+    flex-direction: row;
+  }
+}
+
+.canvasWrapper {
+  flex: 1;
+  background-color: #f3f4f6; /* bg-gray-100 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem; /* p-8 */
+  overflow: hidden;
+}
+
+.canvasContainer {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid black;
+  box-shadow: var(--hard-shadow);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .canvasContainer {
+    max-height: 80vh;
+  }
+}
+
+.canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}

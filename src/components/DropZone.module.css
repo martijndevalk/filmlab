@@ -1,0 +1,44 @@
+.dropZoneContainer {
+  width: 100%;
+  max-width: 42rem;
+  aspect-ratio: 4/3;
+  border: 4px dashed black;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--hard-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropZoneContainer:hover {
+  transform: translate(4px, 4px);
+  box-shadow: 2px 2px 0px black;
+}
+
+.content {
+  text-align: center;
+}
+
+.icon {
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem; /* mb-4 */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: bold;
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.subtitle {
+  color: #6b7280; /* text-gray-500 */
+}
+
+.hiddenInput {
+  display: none;
+}
