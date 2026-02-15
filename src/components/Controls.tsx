@@ -1,4 +1,5 @@
-import { RotateCcw, Download, Share2, Frame } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { RotateCcw, Download, Share2, Frame, ChevronDown, ChevronUp, Sliders, Film } from 'lucide-react';
 import styles from './Controls.module.css';
 
 export type FilterType = 'ektachrome' | 'portra-400' | 'agfa-vista-400' | 'kodachrome-64';
@@ -41,6 +42,18 @@ export function Controls({
   onShare,
   isProcessing
 }: ControlsProps) {
+  const [isFiltersExpanded, setIsFiltersExpanded] = useState(true);
+  const [isEffectsExpanded, setIsEffectsExpanded] = useState(true);
+
+  // Auto-collapse on small screens initially if needed,
+  // but let's keep it simple for now and just allow manual toggle.
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      // Maybe collapse effects by default on small mobile?
+      // setIsEffectsExpanded(false);
+    }
+  }, []);
+
   return (
     <div className={styles.controlsContainer}>
       {/* Header */}
@@ -56,70 +69,102 @@ export function Controls({
         </button>
       </div>
 
-      {/* Filter Selection */}
-      <div>
-        <label className={styles.filterLabel}>Film Type</label>
-        <div className={styles.filterGrid}>
-          {FILTERS.map((filter) => (
-            <button
-              key={filter.id}
-              onClick={() => onFilterChange(filter.id)}
-              className={`${styles.btn} ${styles.filterButton} ${selectedFilter === filter.id ? styles.btnPrimary : ''}`}
-              title={`Toepassen: ${filter.label}`}
-              aria-label={`Selecteer ${filter.label} filter`}
-            >
-              {filter.label}
-            </button>
-          ))}
-        </div>
+      {/* Filter Selection Section */}
+      <div className={styles.section}>
+        <button
+          className={styles.sectionHeader}
+          onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
+        >
+          <div className={styles.sectionTitleWrapper}>
+            <Film size={18} />
+            <h2 className={styles.sectionTitle}>Film Type</h2>
+          </div>
+          {isFiltersExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+
+        {isFiltersExpanded && (
+          <div className={styles.sectionContent}>
+            <div className={styles.filterGrid}>
+              {FILTERS.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => onFilterChange(filter.id)}
+                  className={`${styles.btn} ${styles.filterButton} ${selectedFilter === filter.id ? styles.btnPrimary : ''}`}
+                  title={`Toepassen: ${filter.label}`}
+                  aria-label={`Selecteer ${filter.label} filter`}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Intensity Slider */}
-      <div>
-        <div className={styles.intensityHeader}>
-          <label className={styles.intensityLabel}>Intensity</label>
-          <span className={styles.intensityValue}>{intensity}%</span>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={intensity}
-          onChange={(e) => onIntensityChange(Number(e.target.value))}
-          className={styles.inputRange}
-        />
-      </div>
+      {/* Effects/Settings Section */}
+      <div className={styles.section}>
+        <button
+          className={styles.sectionHeader}
+          onClick={() => setIsEffectsExpanded(!isEffectsExpanded)}
+        >
+          <div className={styles.sectionTitleWrapper}>
+            <Sliders size={18} />
+            <h2 className={styles.sectionTitle}>Effects</h2>
+          </div>
+          {isEffectsExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
 
-      {/* Grain Slider */}
-      <div>
-        <div className={styles.intensityHeader}>
-          <label className={styles.intensityLabel}>Film Grain</label>
-          <span className={styles.intensityValue}>{grainAmount}%</span>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={grainAmount}
-          onChange={(e) => onGrainChange(Number(e.target.value))}
-          className={styles.inputRange}
-        />
-      </div>
+        {isEffectsExpanded && (
+          <div className={`${styles.sectionContent} ${styles.effectsGrid}`}>
+            {/* Intensity Slider */}
+            <div className={styles.sliderGroup}>
+              <div className={styles.intensityHeader}>
+                <label className={styles.intensityLabel}>Intensity</label>
+                <span className={styles.intensityValue}>{intensity}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={intensity}
+                onChange={(e) => onIntensityChange(Number(e.target.value))}
+                className={styles.inputRange}
+              />
+            </div>
 
-      {/* Halation Slider */}
-      <div>
-        <div className={styles.intensityHeader}>
-          <label className={styles.intensityLabel}>Halation (Glow)</label>
-          <span className={styles.intensityValue}>{halationAmount}%</span>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={halationAmount}
-          onChange={(e) => onHalationChange(Number(e.target.value))}
-          className={styles.inputRange}
-        />
+            {/* Grain Slider */}
+            <div className={styles.sliderGroup}>
+              <div className={styles.intensityHeader}>
+                <label className={styles.intensityLabel}>Film Grain</label>
+                <span className={styles.intensityValue}>{grainAmount}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={grainAmount}
+                onChange={(e) => onGrainChange(Number(e.target.value))}
+                className={styles.inputRange}
+              />
+            </div>
+
+            {/* Halation Slider */}
+            <div className={styles.sliderGroup}>
+              <div className={styles.intensityHeader}>
+                <label className={styles.intensityLabel}>Halation</label>
+                <span className={styles.intensityValue}>{halationAmount}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={halationAmount}
+                onChange={(e) => onHalationChange(Number(e.target.value))}
+                className={styles.inputRange}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Actions */}
@@ -132,8 +177,8 @@ export function Controls({
           aria-label="Foto downloaden"
         >
           <div className={styles.downloadContent}>
-            <Download width={20} height={20} />
-            <span>Download</span>
+            <Download width={18} height={18} />
+            <span>Save</span>
           </div>
         </button>
 
@@ -145,8 +190,8 @@ export function Controls({
           aria-label="Exporteer met omlijsting"
         >
           <div className={styles.downloadContent}>
-            <Frame width={20} height={20} />
-            <span>Framed</span>
+            <Frame width={18} height={18} />
+            <span>Frame</span>
           </div>
         </button>
 
@@ -158,7 +203,7 @@ export function Controls({
           aria-label="Foto delen"
         >
           <div className={styles.downloadContent}>
-            <Share2 width={20} height={20} />
+            <Share2 width={18} height={18} />
             <span>Share</span>
           </div>
         </button>
