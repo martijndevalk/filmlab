@@ -1,6 +1,6 @@
 .editorContainer {
   width: 100%;
-  height: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
@@ -15,8 +15,14 @@
   flex: 1;
   width: 100%;
   background-color: #f3f4f6;
-  position: relative; /* Anchor for the absolute container */
-  min-height: 0; /* Important for flex shrink */
+  position: relative;
+  min-height: 400px; /* Force minimum space on mobile */
+}
+
+@media (min-width: 1024px) {
+  .canvasWrapper {
+    min-height: 0;
+  }
 }
 
 .canvasContainer {

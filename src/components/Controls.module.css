@@ -1,16 +1,20 @@
 .controlsContainer {
   width: 100%;
-  padding: 1.5rem; /* p-6 */
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* gap-6 */
+  gap: 1rem;
   background: var(--muted);
-  border-left: 4px solid black;
+  border-top: 4px solid black;
 }
 
 @media (min-width: 1024px) {
   .controlsContainer {
-    width: 24rem; /* lg:w-96 */
+    width: 24rem;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    border-top: none;
+    border-left: 4px solid black;
   }
 }
 

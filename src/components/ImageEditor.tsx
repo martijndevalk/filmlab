@@ -47,7 +47,7 @@ export function ImageEditor({ imageFile, onReset }: ImageEditorProps) {
   const { isProcessing } = useLutFilter({
     canvasRef,
     image,
-    lutUrl: `/luts/${selectedFilter}.cube`,
+    lutUrl: `${import.meta.env.BASE_URL}/luts/${selectedFilter}.cube`.replace(/\/+/g, '/'),
     intensity,
     grainAmount,
     halationAmount,
