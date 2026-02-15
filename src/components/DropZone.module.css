@@ -1,34 +1,48 @@
 .dropZone {
   width: 100%;
-  max-width: 48rem;
-  aspect-ratio: 16/9;
-  border: 4px dashed black;
-  background-color: white;
+  max-width: var(--max-width-content);
+  aspect-ratio: var(--aspect-video);
+  border: var(--border-main);
+  border-style: dashed;
+  background-color: var(--color-surface);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform var(--duration-fast) var(--timing-bounce),
+              background-color var(--duration-fast) var(--timing-bounce),
+              box-shadow var(--duration-fast) var(--timing-bounce),
+              border-color var(--duration-fast) var(--timing-bounce);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem; /* Increased padding to prevent touching borders */
+  padding: var(--space-2xl); /* Increased padding to prevent touching borders */
   box-shadow: var(--hard-shadow);
-  animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  animation: fadeIn var(--duration-slow) var(--timing-smooth) var(--delay-snappy) both;
+
+  &:hover {
+    background-color: var(--color-brand-light);
+    transform: translate(calc(-1 * var(--px-4)), calc(-1 * var(--px-4)));
+    box-shadow: var(--px-12) var(--px-12) 0px var(--color-on-surface);
+
+    & .icon {
+      animation: bounce var(--duration-slow) var(--timing-bounce) infinite alternate;
+    }
+  }
+
+  &.dropZoneActive {
+    border: var(--px-4) solid var(--kodak-yellow);
+    background-color: var(--color-brand-light);
+  }
+
+  &.loading {
+    cursor: wait;
+    opacity: 0.8;
+    pointer-events: none;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(var(--px-10)); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-.dropZone:hover {
-  background-color: #fff9e6;
-  transform: translate(-4px, -4px);
-  box-shadow: 12px 12px 0px rgba(0, 0, 0, 1);
-}
-
-.dropZoneActive {
-  border: 4px solid var(--kodak-yellow);
-  background-color: rgba(253, 185, 19, 0.1);
 }
 
 .content {
@@ -36,50 +50,41 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem; /* Tight gap for text elements */
+  gap: var(--space-2xs); /* Tight gap for text elements */
 }
 
 .iconBox {
-  padding: 1.25rem;
-  background: black;
-  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  padding: var(--space-md-lg);
+  background: var(--color-on-surface);
+  box-shadow: var(--px-4) var(--px-4) 0px 0px var(--color-on-surface);
   display: inline-flex;
-  margin-bottom: 0.75rem; /* Spacing below the icon box */
+  margin-bottom: var(--space-sm); /* Spacing below the icon box */
 }
 
 .icon {
-  width: 3rem;
-  height: 3rem;
+  width: var(--space-3xl);
+  height: var(--space-3xl);
   display: block;
-}
-
-.dropZone:hover .icon {
-  animation: bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite alternate;
 }
 
 @keyframes bounce {
   from { transform: translateY(0) scale(1.05); }
-  to { transform: translateY(-10px) scale(0.95); }
+  to { transform: translateY(calc(-1 * var(--px-10))) scale(0.95); }
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 900;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-black);
   margin: 0;
-  color: black;
+  color: var(--color-on-surface);
+  line-height: var(--line-height-tight);
 }
 
 .subtitle {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
   margin: 0;
-  color: #4b5563;
-}
-
-.loading {
-  cursor: wait;
-  opacity: 0.8;
-  pointer-events: none;
+  color: var(--color-text-secondary);
 }
 
 .loaderContainer {
@@ -87,20 +92,27 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: black;
-}
+  color: var(--color-on-surface);
 
-.spinner {
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
-}
+  & .spinner {
+    animation: spin 1s linear infinite;
+    margin-bottom: var(--space-md);
+  }
 
-.loadingText {
-  font-size: 1.25rem;
-  font-weight: 800;
+  & .loadingText {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-extrabold);
+  }
 }
 
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.error {
+  color: var(--destructive);
+  margin-top: var(--space-md);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-main);
 }

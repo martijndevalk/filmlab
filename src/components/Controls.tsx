@@ -27,6 +27,9 @@ interface ControlsProps {
   isProcessing: boolean;
 }
 
+import { Button } from './ui/Button';
+import { Slider } from './ui/Slider';
+
 export function Controls({
   selectedFilter,
   onFilterChange,
@@ -59,14 +62,14 @@ export function Controls({
       {/* Header */}
       <div className={styles.header}>
         <h1 className={styles.title}>FilmLab</h1>
-        <button
+        <Button
+          variant="icon"
           onClick={onReset}
-          className={`${styles.btn} ${styles.btnIcon}`}
           aria-label="Instellingen herstellen"
           title="Instellingen herstellen naar de beginwaarden"
         >
-          <RotateCcw width={20} height={20} />
-        </button>
+          <RotateCcw size={20} />
+        </Button>
       </div>
 
       {/* Filter Selection Section */}
@@ -85,15 +88,16 @@ export function Controls({
         <div className={`${styles.sectionContent} ${!isFiltersExpanded ? styles.collapsed : ''}`}>
           <div className={styles.filterGrid}>
             {FILTERS.map((filter) => (
-              <button
+              <Button
                 key={filter.id}
                 onClick={() => onFilterChange(filter.id)}
-                className={`${styles.btn} ${styles.filterButton} ${selectedFilter === filter.id ? styles.btnPrimary : ''}`}
+                variant={selectedFilter === filter.id ? 'primary' : 'secondary'}
+                className={styles.filterButton}
                 title={`Toepassen: ${filter.label}`}
                 aria-label={`Selecteer ${filter.label} filter`}
               >
                 {filter.label}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -113,96 +117,65 @@ export function Controls({
         </button>
 
         <div className={`${styles.sectionContent} ${styles.effectsGrid} ${!isEffectsExpanded ? styles.collapsed : ''}`}>
-          {/* Intensity Slider */}
-          <div className={styles.sliderGroup}>
-            <div className={styles.intensityHeader}>
-              <label className={styles.intensityLabel}>Intensity</label>
-              <span className={styles.intensityValue}>{intensity}%</span>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={intensity}
-              onChange={(e) => onIntensityChange(Number(e.target.value))}
-              className={styles.inputRange}
-            />
-          </div>
-
-          {/* Grain Slider */}
-          <div className={styles.sliderGroup}>
-            <div className={styles.intensityHeader}>
-              <label className={styles.intensityLabel}>Film Grain</label>
-              <span className={styles.intensityValue}>{grainAmount}%</span>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={grainAmount}
-              onChange={(e) => onGrainChange(Number(e.target.value))}
-              className={styles.inputRange}
-            />
-          </div>
-
-          {/* Halation Slider */}
-          <div className={styles.sliderGroup}>
-            <div className={styles.intensityHeader}>
-              <label className={styles.intensityLabel}>Halation</label>
-              <span className={styles.intensityValue}>{halationAmount}%</span>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={halationAmount}
-              onChange={(e) => onHalationChange(Number(e.target.value))}
-              className={styles.inputRange}
-            />
-          </div>
+          <Slider
+            label="Intensity"
+            value={intensity}
+            onChange={onIntensityChange}
+          />
+          <Slider
+            label="Film Grain"
+            value={grainAmount}
+            onChange={onGrainChange}
+          />
+          <Slider
+            label="Halation"
+            value={halationAmount}
+            onChange={onHalationChange}
+          />
         </div>
       </div>
 
       {/* Actions */}
       <div className={styles.actionsGrid}>
-        <button
+        <Button
+          variant="primary"
           onClick={onDownload}
           disabled={isProcessing}
-          className={`${styles.btn} ${styles.btnPrimary} ${styles.actionButton}`}
+          className={styles.actionButton}
           title="Download de bewerkte foto"
           aria-label="Foto downloaden"
         >
           <div className={styles.downloadContent}>
-            <Download width={18} height={18} />
+            <Download size={18} />
             <span>Save</span>
           </div>
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={onExportWithFrame}
           disabled={isProcessing}
-          className={`${styles.btn} ${styles.actionButton}`}
+          className={styles.actionButton}
           title="Exporteer met een witte rand en tekst"
           aria-label="Exporteer met omlijsting"
         >
           <div className={styles.downloadContent}>
-            <Frame width={18} height={18} />
+            <Frame size={18} />
             <span>Frame</span>
           </div>
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={onShare}
           disabled={isProcessing}
-          className={`${styles.btn} ${styles.actionButton}`}
+          className={styles.actionButton}
           title="Deel je foto via sociale media of andere apps"
           aria-label="Foto delen"
         >
           <div className={styles.downloadContent}>
-            <Share2 width={18} height={18} />
+            <Share2 size={18} />
             <span>Share</span>
           </div>
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -30,7 +30,6 @@ const { title } = Astro.props;
 
 <style is:global>
 	:root {
-		--font-size: 16px;
 		--background: #ffffff;
 		--foreground: oklch(0.145 0 0);
 		--card: #ffffff;
@@ -54,17 +53,117 @@ const { title } = Astro.props;
 		--ring: oklch(0.708 0 0);
 		--radius: 0.625rem;
 
-		/* FilmLab Custom Variables */
+		/* Pixel Dimensions */
+		--px-1: 1px;
+		--px-2: 2px;
+		--px-4: 4px;
+		--px-8: 8px;
+		--px-10: 10px;
+		--px-12: 12px;
+		--px-16: 16px;
+		--px-20: 20px;
+		--px-24: 24px;
+		--px-32: 32px;
+		--px-48: 48px;
+
+		/* FilmLab Design System Tokens */
 		--kodak-yellow: #FDB913;
-		--hard-shadow: 6px 6px 0px #000000;
-		--hard-shadow-sm: 3px 3px 0px #000000;
+		--hard-shadow: var(--px-8) var(--px-8) 0px 0px var(--color-on-surface);
+		--hard-shadow-sm: var(--px-4) var(--px-4) 0px 0px var(--color-on-surface);
+		--border-main: var(--px-4) solid var(--color-on-surface);
+		--border-thin: var(--px-2) solid var(--color-on-surface);
+
+		/* Timing Functions */
+		--timing-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		--timing-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+		/* Hover States */
+		--hover-bg: #fff9e6;
+		/* Spacing Scale */
+		--space-3xs: 0.125rem;
+		--space-2xs: 0.25rem;
+		--space-xs: 0.5rem;
+		--space-sm: 0.75rem;
+		--space-md: 1rem;
+		--space-md-lg: 1.25rem;
+		--space-lg: 1.5rem;
+		--space-xl: 2rem;
+		--space-xl-2xl: 2.25rem;
+		--space-2xl: 2.5rem;
+		--space-3xl: 3rem;
+		--space-4xl: 4rem;
+
+		/* Layout Tokens */
+		--max-width-content: 48rem;
+		--max-width-grid: 64rem;
+		--controls-width: 24rem;
+		--editor-min-height: 400px;
+
+		/* Design System Colors */
+		--color-bg-app: #f3f4f6;
+		--color-surface: #ffffff;
+		--color-on-surface: #000000;
+		--color-text-primary: #111827;
+		--color-text-secondary: #4b5563;
+		--color-text-muted: #6b7280;
+		--color-text-inverted: #ffffff;
+		--color-brand: var(--kodak-yellow);
+		--color-brand-hover: #ffc845;
+		--color-success: #10b981;
+		--color-accent-blue: #3b82f6;
+		--color-accent-orange: #ff9800;
+		--color-overlay: rgba(0, 0, 0, 0.08);
+		--color-brand-light: rgba(253, 185, 19, 0.1);
+
+		/* Typography Tokens */
+		--font-main: 'Inter', system-ui, -apple-system, sans-serif;
+		--font-weight-black: 900;
+		--font-weight-extrabold: 800;
+		--font-weight-bold: 700;
+		--font-weight-medium: 500;
+		--font-weight-normal: 400;
+
+		--line-height-tight: 1.1;
+		--line-height-base: 1.5;
+		--line-height-relaxed: 1.625;
+		--letter-spacing-tight: -0.02em;
+		--letter-spacing-normal: 0;
+
+		/* Font Size Scale */
+		--font-size-xs: 0.75rem;
+		--font-size-sm: 0.875rem;
+		--font-size-base: 1rem;
+		--font-size-lg: 1.125rem;
+		--font-size-xl: 1.25rem;
+		--font-size-2xl: 1.5rem;
+		--font-size-3xl: 1.75rem;
+		--font-size-4xl: 2rem;
+		--font-size-5xl: 2.25rem;
+		--font-size-6xl: 3rem;
+		--font-size-7xl: 3.5rem;
+		--font-size-8xl: 4.5rem;
+
+		/* Utility Tokens */
+		--opacity-noise: 0.08;
+		--aspect-video: 16/9;
+
+		/* Timings & Durations */
+		--duration-snappy: 0.15s;
+		--duration-fast: 0.2s;
+		--duration-medium: 0.35s;
+		--duration-smooth: 0.4s;
+		--duration-slow: 0.6s;
+		--duration-loop: 6s;
+		--duration-spin: 1s;
+		--delay-snappy: 0.1s;
 	}
 
 	html {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: var(--font-main);
 		background: var(--background);
 		color: var(--foreground);
-		font-size: var(--font-size);
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-base);
 	}
 
 	body {

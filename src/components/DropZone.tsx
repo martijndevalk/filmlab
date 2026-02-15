@@ -111,7 +111,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
         ) : (
           <>
             <div className={styles.iconBox}>
-              <Upload className={styles.icon} color="white" size={48} strokeWidth={2.5} />
+              <Upload className={styles.icon} color="var(--color-text-inverted)" size={48} strokeWidth={2.5} />
             </div>
             <p className={styles.title}>
               Sleep je JPG hier
@@ -120,7 +120,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
               of klik om te uploaden
             </p>
             {error && (
-              <p style={{ color: 'var(--destructive)', marginTop: '1rem', fontWeight: 'bold' }}>
+              <p className={styles.error}>
                 {error}
               </p>
             )}

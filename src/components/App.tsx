@@ -4,6 +4,8 @@ import { ImageEditor } from './ImageEditor';
 import { Zap, Layers, ShieldCheck } from 'lucide-react';
 import styles from './App.module.css';
 
+import { FeatureCard } from './ui/FeatureCard';
+
 export default function App() {
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -48,29 +50,21 @@ export default function App() {
           </main>
 
           <footer className={styles.featuresGrid}>
-            <div className={styles.featureBox}>
-              <div className={styles.featureHeader}>
-                <Zap size={20} fill="orange" stroke="orange" />
-                <span className={styles.featureTitle}>Snel</span>
-              </div>
-              <p className={styles.featureDesc}>Direct resultaat in je browser</p>
-            </div>
-
-            <div className={styles.featureBox}>
-              <div className={styles.featureHeader}>
-                <Layers size={20} fill="#3b82f6" stroke="#3b82f6" />
-                <span className={styles.featureTitle}>Authentiek</span>
-              </div>
-              <p className={styles.featureDesc}>4 klassieke filmstocks</p>
-            </div>
-
-            <div className={styles.featureHeader + ' ' + styles.featureBox}>
-              <div className={styles.featureHeader}>
-                <ShieldCheck size={20} fill="#10b981" stroke="#10b981" />
-                <span className={styles.featureTitle}>Privacy</span>
-              </div>
-              <p className={styles.featureDesc}>100% lokaal, geen upload</p>
-            </div>
+            <FeatureCard
+              icon={<Zap size={20} fill="var(--color-accent-orange)" stroke="var(--color-accent-orange)" />}
+              title="Snel"
+              description="Direct resultaat in je browser"
+            />
+            <FeatureCard
+              icon={<Layers size={20} fill="var(--color-accent-blue)" stroke="var(--color-accent-blue)" />}
+              title="Authentiek"
+              description="4 klassieke filmstocks"
+            />
+            <FeatureCard
+              icon={<ShieldCheck size={20} fill="var(--color-success)" stroke="var(--color-success)" />}
+              title="Privacy"
+              description="100% lokaal, geen upload"
+            />
           </footer>
         </div>
       ) : (

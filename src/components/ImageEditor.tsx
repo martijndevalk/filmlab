@@ -94,14 +94,14 @@ export function ImageEditor({ imageFile, onReset }: ImageEditorProps) {
     canvas.height = sourceCanvas.height + padding + bottomPadding;
 
     // Background
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = '#ffffff'; // --color-surface
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Image
     ctx.drawImage(sourceCanvas, padding, padding);
 
     // Text
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = '#111827'; // --color-text-primary
     const fontSize = Math.max(20, sourceCanvas.width * 0.04);
     ctx.font = `bold ${fontSize}px monospace`;
     ctx.textAlign = 'center';
@@ -169,7 +169,7 @@ export function ImageEditor({ imageFile, onReset }: ImageEditorProps) {
            </div>
 
            {!image && (
-             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+             <div className={styles.loadingOverlay}>
                Loading image...
              </div>
            )}
