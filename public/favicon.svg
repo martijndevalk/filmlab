@@ -1,0 +1,16 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background / Roll Case -->
+  <rect x="4" y="4" width="24" height="24" rx="2" fill="black" stroke="white" stroke-width="2"/>
+
+  <!-- Sprocket Holes -->
+  <rect x="7" y="7" width="4" height="4" fill="white"/>
+  <rect x="7" y="14" width="4" height="4" fill="white"/>
+  <rect x="7" y="21" width="4" height="4" fill="white"/>
+
+  <rect x="21" y="7" width="4" height="4" fill="white"/>
+  <rect x="21" y="14" width="4" height="4" fill="white"/>
+  <rect x="21" y="21" width="4" height="4" fill="white"/>
+
+  <!-- Center 'f' for FilmLab -->
+  <path d="M14 12V20M14 14H18M14 12H18" stroke="white" stroke-width="3" stroke-linecap="square"/>
+</svg>
