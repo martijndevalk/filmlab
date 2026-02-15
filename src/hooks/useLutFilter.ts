@@ -12,9 +12,20 @@ interface UseLutFilterProps {
   image: HTMLImageElement | null;
   lutUrl: string | null;
   intensity: number;
+  grainAmount: number;
+  halationAmount: number;
+  showOriginal: boolean;
 }
 
-export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilterProps) {
+export function useLutFilter({
+  canvasRef,
+  image,
+  lutUrl,
+  intensity,
+  grainAmount,
+  halationAmount,
+  showOriginal
+}: UseLutFilterProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [lutIdentifier, setLutIdentifier] = useState(0); // Used to force re-render when LUT changes
   const glRef = useRef<WebGL2RenderingContext | null>(null);
@@ -76,14 +87,14 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
     };
 
     loadLut();
-  }, [lutUrl, glRef.current]); // Added glRef.current just in case, though it's a ref
+  }, [lutUrl, glRef.current]);
 
   // Render Loop
   useEffect(() => {
     const gl = glRef.current;
     if (!gl || !programRef.current || !canvasRef.current || !image) return;
 
-    const render = () => {
+    const render = (time: number) => {
       // Resize canvas to match image
       if (canvasRef.current!.width !== image.width || canvasRef.current!.height !== image.height) {
         canvasRef.current!.width = image.width;
@@ -119,6 +130,12 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
          gl.uniform1f(gl.getUniformLocation(programRef.current!, 'u_intensity'), 0.0);
       }
 
+      // New Uniforms
+      gl.uniform1f(gl.getUniformLocation(programRef.current!, 'u_grainAmount'), grainAmount / 100);
+      gl.uniform1f(gl.getUniformLocation(programRef.current!, 'u_halationAmount'), halationAmount / 100);
+      gl.uniform1i(gl.getUniformLocation(programRef.current!, 'u_showOriginal'), showOriginal ? 1 : 0);
+      gl.uniform1f(gl.getUniformLocation(programRef.current!, 'u_time'), time * 0.001);
+
       // Draw Quad
       const positionBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -152,11 +169,16 @@ export function useLutFilter({ canvasRef, image, lutUrl, intensity }: UseLutFilt
       gl.vertexAttribPointer(a_texCoord, 2, gl.FLOAT, false, 0, 0);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+      // Cleanup buffers
+      gl.deleteBuffer(positionBuffer);
+      gl.deleteBuffer(texCoordBuffer);
     };
 
-    requestAnimationFrame(render);
+    const handle = requestAnimationFrame(render);
+    return () => cancelAnimationFrame(handle);
 
-  }, [image, intensity, lutUrl, lutIdentifier]); // Added lutIdentifier dependency
+  }, [image, intensity, lutUrl, lutIdentifier, grainAmount, halationAmount, showOriginal]);
 
   return { isProcessing };
 }

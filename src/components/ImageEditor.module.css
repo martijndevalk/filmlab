@@ -43,3 +43,39 @@
   background-color: white;
   pointer-events: auto;
 }
+
+.compareOverlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: white;
+  border: 2px solid black;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0px black;
+  cursor: help;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.compareTooltip {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 120%;
+  transform: translateY(-50%);
+  background: black;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.compareOverlay:hover .compareTooltip {
+  display: block;
+}

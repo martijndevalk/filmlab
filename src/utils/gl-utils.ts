@@ -17,11 +17,55 @@ out vec4 outColor;
 uniform sampler2D u_image;
 uniform sampler3D u_lut;
 uniform float u_intensity;
+uniform float u_grainAmount;
+uniform float u_halationAmount;
+uniform bool u_showOriginal;
+uniform float u_time;
+
+// Procedural noise for grain
+float noise(vec2 p) {
+    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+// Overlay blend mode
+vec3 overlay(vec3 base, vec3 blend) {
+    return mix(
+        2.0 * base * blend,
+        1.0 - 2.0 * (1.0 - base) * (1.0 - blend),
+        step(0.5, base)
+    );
+}
 
 void main() {
-  vec4 color = texture(u_image, v_texCoord);
-  vec3 lutColor = texture(u_lut, color.rgb).rgb;
-  outColor = vec4(mix(color.rgb, lutColor, u_intensity), color.a);
+    vec4 textureColor = texture(u_image, v_texCoord);
+
+    if (u_showOriginal) {
+        outColor = textureColor;
+        return;
+    }
+
+    // 1. Apply LUT
+    vec3 color = texture(u_lut, textureColor.rgb).rgb;
+    color = mix(textureColor.rgb, color, u_intensity);
+
+    // 2. Grain (Overlay)
+    if (u_grainAmount > 0.0) {
+        float n = noise(v_texCoord * u_time);
+        vec3 grainColor = vec3(n);
+        color = mix(color, overlay(color, grainColor), u_grainAmount * 0.4);
+    }
+
+    // 3. Halation (Simplified single-pass)
+    if (u_halationAmount > 0.0) {
+        float luma = dot(color, vec3(0.299, 0.587, 0.114));
+        if (luma > 0.8) {
+            float strength = (luma - 0.8) * 5.0;
+            vec3 haloTint = vec3(1.0, 0.3, 0.1); // Red/Orange emulsie tint
+            color += haloTint * strength * u_halationAmount * 0.2;
+        }
+    }
+
+    outColor = vec4(color, textureColor.a);
 }
 `;
 

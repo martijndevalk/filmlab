@@ -10,7 +10,8 @@ const CONSTANTS = {
   MAGIC_NUMBERS: {
     JPG: [0xFF, 0xD8, 0xFF],
     PNG: [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]
-  }
+  },
+  MAX_FILE_SIZE: 20 * 1024 * 1024 // 20MB
 };
 
 export function DropZone({ onFileSelect }: DropZoneProps) {
@@ -18,7 +19,13 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const validateFile = async (file: File): Promise<boolean> => {
-    // 1. MIME type check
+    // 1. File size check
+    if (file.size > CONSTANTS.MAX_FILE_SIZE) {
+      setError(`Bestand is te groot. Maximaal ${CONSTANTS.MAX_FILE_SIZE / (1024 * 1024)}MB.`);
+      return false;
+    }
+
+    // 2. MIME type check
     if (!['image/jpeg', 'image/png'].includes(file.type)) {
       setError('Alleen JPG en PNG bestanden zijn toegestaan.');
       return false;
